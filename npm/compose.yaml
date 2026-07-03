@@ -18,12 +18,12 @@ services:
       - 80:80
       - 10081:81 # NPM admin interface, can disable after setup or keep if blocked via other means
       # Other ports we want to expose through the proxy?
-      - 25565:25565
-      - 25565:25565/udp
+      #- 25565:25565
+      #- 25565:25565/udp
       # - '21:21' # FTP
-      - '2222:2222' # SSH 2222
-      - '2223:2223' # SSH 2223
-      - '2224:2224' # SSH 2224
+      #- '2222:2222' # SSH 2222
+      #- '2223:2223' # SSH 2223
+      #- '2224:2224' # SSH 2224
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "/bin/check-health"]
