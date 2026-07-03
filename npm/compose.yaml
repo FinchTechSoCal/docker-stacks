@@ -1,0 +1,36 @@
+#
+# https://nginxproxymanager.com/
+#
+--- 
+services:
+  npm:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: npm
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - DISABLE_IPV6=true
+    volumes:
+      - ${LOCVOL1}npm/app:/data
+      - ${LOCVOL1}npm/certs:/etc/letsencrypt
+    ports:
+      - 443:443
+      - 80:80
+      - 10081:81 # NPM admin interface, can disable after setup or keep if blocked via other means
+      # Other ports we want to expose through the proxy?
+      - 25565:25565
+      - 25565:25565/udp
+      # - '21:21' # FTP
+      - '2222:2222' # SSH 2222
+      - '2223:2223' # SSH 2223
+      - '2224:2224' # SSH 2224
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "/bin/check-health"]
+      interval: 10s
+      timeout: 3s
+#
+networks:
+  default:
+    name: ${CONNET}
+    external: true
