@@ -17,7 +17,39 @@ Remote Docker agent for [Dockhand](https://dockhand.pro) - manage Docker hosts a
 
 Prefer Edge Mode for our needs but "Standard Mode with TLS and Token" is an option
 
+
 **Clone git to system**
+```bash
+rm -fr /opt/stacks/hawser
+mkdir -p /opt/stacks/hawser
+curl -fsSL https://raw.githubusercontent.com/FinchTechSoCal/docker-stacks/refs/heads/main/hawser/.env -o /opt/stacks/hawser/.env
+curl -fsSL https://raw.githubusercontent.com/FinchTechSoCal/docker-stacks/refs/heads/main/hawser/compose.yml -o /opt/stacks/hawser/compose.yml
+sed -i 's;AGENT_NAME=;AGENT_NAME='$(cat /etc/hostname)';g' /opt/stacks/hawser/.env
+```
+
+
+*Edge mode*:
+These are generated from dockhand
+
+```bash
+DOCKHAND_SERVER_URL=Your_Dockhand_WSS_URL
+TOKEN=Your_Generated_Token
+```
+Then
+```bash
+sed -i 's;DOCKHAND_SERVER_URL=;DOCKHAND_SERVER_URL='$DOCKHAND_SERVER_URL';g' /opt/stacks/hawser/.env
+sed -i 's;YourOwnSuperSecretToken;'$TOKEN';g' /opt/stacks/hawser/.env
+```
+
+**Run**
+```bash
+docker compose -f /opt/stacks/hawser/compose.yml up -d
+```
+
+
+
+
+**OLD Clone git to system**
 ```bash
 rm -fr ~/appdata/stacks/hawser
 mkdir -p ~/appdata/hawser/
