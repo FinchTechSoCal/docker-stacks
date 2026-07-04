@@ -1,7 +1,5 @@
 # Binaries
-/hawser
 *.exe
-dist/
 
 # Dependencies
 vendor/
