@@ -1,0 +1,35 @@
+#
+# https://github.com/Finsys/hawser/tree/main?tab=readme-ov-file#docker
+# https://dockhand.pro/manual/#hawser
+#
+
+services:
+  hawser:
+    container_name: hawser
+    image: ghcr.io/finsys/hawser:${IMAGE_TAG}
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - TOKEN=${TOKEN}
+      - DOCKHAND_SERVER_URL=${DOCKHAND_SERVER_URL} # populate for edge mode
+      - LOG_LEVEL=${LOG_LEVEL} # optional, default info - values: debug, info, warn, error
+      - AGENT_NAME=${AGENT_NAME} # recommend host/client name
+      - TLS_SKIP_VERIFY=${TLS_SKIP_VERIFY} # false/true, for testing
+      - HEARTBEAT_INTERVAL=${HEARTBEAT_INTERVAL} # optional, default 30
+      - CA_CERT=${CA_CERT} # .crt/.pem file if there's a self signed cert in front of dockhand
+      - TLS_CERT=${TLS_CERT} # .crt/.pem file
+      - TLS_KEY=${TLS_KEY} # .key/.pem file
+      - STACKS_DIR=${STACKS_DIR}
+    volumes:
+      - ${LOCVOL1}hawser:/certs
+      - ${STACKS_DIR}:${STACKS_DIR}
+      - /var/run/docker.sock:/var/run/docker.sock
+    #ports:
+    #  - 2376:2376 # ports can be disabled for edge mode
+    restart: always
+
+networks:
+  default:
+    name: ${CONNET}
+    external: true
