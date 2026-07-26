@@ -33,7 +33,7 @@ sudo tee -a /etc/environment << 'EOF'
 PUID=1000
 PGID=1000
 TZ=America/Los_Angeles
-LOCVOL1=/opt/docker
+APPDATA=/opt/docker
 CONNET=dbr0
 EOF
 ```
